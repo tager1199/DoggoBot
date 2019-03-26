@@ -70,7 +70,7 @@ async def on_message(message):
     #if message starts with 'doggo show me a doggo' send a pic of a doggo from folder
     if message.content.startswith('doggo show me a doggo'):
         #get random number for image
-        rando = random.randint(0,35) + 1
+        rando = random.randint(0,41) + 1
         with open(dir_path+'/Doggos/'+str(rando)+'.jpg', 'rb') as picture:
             await client.send_file(message.channel,picture)
 
