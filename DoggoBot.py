@@ -25,64 +25,74 @@ consumer_secret = "lxReKcp7LsXEpPOETRSVGttHfQE4RHkr4WIcXVlj2zOD7AJoAL"
 api = twitter.Api(consumer_key,consumer_secret,access_token,access_token_secret, tweet_mode='extended')
 
 
-
-TOKEN = 'NDA2MDEwNDkwMzMwOTM5Mzky.D3rNdQ.JS5uvJ-9KnACUyHUw8OBEDkPvV0'
+f = open("TOKEN.txt", "r")
+TOKEN = f.read();
 
 client = discord.Client()
 
 @client.event
 async def on_message(message):
-    rand = random.randint(0,10)
+    rand = random.randint(0,200)
 
-
+    #Add Emoji Reaction to any message containing 'bork'
     if "bork" in message.content:
         emoji = get(client.get_all_emojis(), name="\U0001F415")
         await client.add_reaction(message, "\U0001F415")
 
 
 
-    #we do not want the bot to reply to itself
+    #if message author is bot
     if message.author == client.user:
+        #Add emoji reaction to any message sent by the bot
         emoji = get(client.get_all_emojis(), name="\U0001F436")
         await client.add_reaction(message, "\U0001F436")
+        #stop the bot replying to itself
         return
 
+    #get 20 latest tweets from @dog_feelings and add them to a dict
+    t = api.GetUserTimeline(screen_name="dog_feelings", count=20)
+    tweets = [i.AsDict() for i in t]
+
+    #if message starts with 'hello doggo', say hello and @ the person who said it
     if message.content.startswith('hello doggo'):
         msg = 'Hello {0.author.mention}'.format(message)
         await client.send_message(message.channel, msg)
 
+    #if message starts with 'what are you thinking doggo?'
     if message.content.startswith('what are you thinking doggo?'):
-        t = api.GetUserTimeline(screen_name="dog_feelings", count=20)
-        tweets = [i.AsDict() for i in t]
+        #get random tweet from the dict of tweets
         msg = tweets[random.randint(0,20)]['full_text']
+        #send tweet as message
         await client.send_message(message.channel, msg)
 
+    #if message starts with 'doggo show me a doggo' send a pic of a doggo from folder
     if message.content.startswith('doggo show me a doggo'):
+        #get random number for image
         rando = random.randint(0,35) + 1
         with open(dir_path+'/Doggos/'+str(rando)+'.jpg', 'rb') as picture:
             await client.send_file(message.channel,picture)
 
-    if "good boy" in message.content:
+    #if message contains 'good boy' or 'good boi' reply with 'im a good boy'
+    if "good boy" in message.content or "good boi" in message.content:
         await client.send_message(message.channel, 'im a good boy')
 
-    if "good boi" in message.content:
-        await client.send_message(message.channel, 'im a good boy')
-
+    #if message contains 'woof' reply with 'bork' and vice versa
     if "woof" in message.content:
         await client.send_message(message.channel, 'bork')
-
 
     if "bork" in message.content:
         await client.send_message(message.channel, 'woof')
 
-    if rand == 5:
+    #at random send a message of 'woof woof' or 'bork bork'
+    if rand == 50:
         await client.send_message(message.channel, 'woof woof')
 
-    if rand == 2:
+    if rand == 20:
         await client.send_message(message.channel, 'bork bork')
 
 
 @client.event
+#log basic info when the bot starts running
 async def on_ready():
     print('Logged in as')
     print(client.user.name)
