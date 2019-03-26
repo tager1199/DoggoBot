@@ -17,10 +17,12 @@ from discord.utils import get
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
 #Variables that contains the user credentials to access Twitter API
+t = open("TwitterSecret.txt", "r")
+c = open("ConsumerSecret", "r")
 access_token = "3303963448-DYXKxwkKTeOZPScOBgXVGLDfrl8DR0ZQsrQvMQp"
-access_token_secret = "M344sq15rUGchM6h03zx2DqeKmiJzhAPLLnyp3YCagFnA"
+access_token_secret =  t.read()
 consumer_key = "anEmKfK4WLIW5IIPyQk7mgWLn"
-consumer_secret = "lxReKcp7LsXEpPOETRSVGttHfQE4RHkr4WIcXVlj2zOD7AJoAL"
+consumer_secret = c.read()
 
 api = twitter.Api(consumer_key,consumer_secret,access_token,access_token_secret, tweet_mode='extended')
 
