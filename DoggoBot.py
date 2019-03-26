@@ -18,7 +18,7 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 
 #Variables that contains the user credentials to access Twitter API
 t = open("TwitterSecret.txt", "r")
-c = open("ConsumerSecret", "r")
+c = open("ConsumerSecret.txt", "r")
 access_token = "3303963448-DYXKxwkKTeOZPScOBgXVGLDfrl8DR0ZQsrQvMQp"
 access_token_secret =  t.read()
 consumer_key = "anEmKfK4WLIW5IIPyQk7mgWLn"
