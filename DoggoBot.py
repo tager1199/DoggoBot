@@ -12,6 +12,9 @@
 import discord
 import twitter
 import random
+import os
+from discord.utils import get
+dir_path = os.path.dirname(os.path.realpath(__file__))
 
 #Variables that contains the user credentials to access Twitter API
 access_token = "3303963448-DYXKxwkKTeOZPScOBgXVGLDfrl8DR0ZQsrQvMQp"
@@ -29,21 +32,53 @@ client = discord.Client()
 
 @client.event
 async def on_message(message):
+    rand = random.randint(0,1000)
     #we do not want the bot to reply to itself
+
+    if "bork" in message.content:
+        emoji = get(bot.get_all_emojis(), name='doge')
+        await bot.add_reaction(message, emoji)
+
+
+
+
     if message.author == client.user:
         return
 
     if message.content.startswith('hello doggo'):
         msg = 'Hello {0.author.mention}'.format(message)
         await client.send_message(message.channel, msg)
-        #send_file(destination, fp, *, filename=None, content=None, tts=False)
-
 
     if message.content.startswith('what are you thinking doggo?'):
         t = api.GetUserTimeline(screen_name="dog_feelings", count=20)
         tweets = [i.AsDict() for i in t]
         msg = tweets[random.randint(0,20)]['full_text']
         await client.send_message(message.channel, msg)
+
+    if message.content.startswith('doggo show me a doggo'):
+        rando = random.randint(0,35) + 1
+        with open(dir_path+'/Doggos/'+str(rando)+'.jpg', 'rb') as picture:
+            await client.send_file(message.channel,picture)
+
+    if "good boy" in message.content:
+        await client.send_message(message.channel, 'im a good boy')
+
+    if "good boi" in message.content:
+        await client.send_message(message.channel, 'im a good boy')
+
+    if "woof" in message.content:
+        await client.send_message(message.channel, 'bork')
+
+
+    if "bork" in message.content:
+        await client.send_message(message.channel, 'woof')
+
+    if rand == 500:
+        await client.send_message(message.channel, 'woof woof')
+
+    if rand == 200:
+        await client.send_message(message.channel, 'bork bork')
+
 
 @client.event
 async def on_ready():
