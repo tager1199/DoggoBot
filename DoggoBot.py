@@ -32,7 +32,7 @@ client = discord.Client()
 
 @client.event
 async def on_message(message):
-    rand = random.randint(0,500)
+    rand = random.randint(0,10)
 
 
     if "bork" in message.content:
@@ -75,10 +75,10 @@ async def on_message(message):
     if "bork" in message.content:
         await client.send_message(message.channel, 'woof')
 
-    if rand == 300:
+    if rand == 5:
         await client.send_message(message.channel, 'woof woof')
 
-    if rand == 200:
+    if rand == 2:
         await client.send_message(message.channel, 'bork bork')
 
 
