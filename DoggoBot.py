@@ -32,17 +32,19 @@ client = discord.Client()
 
 @client.event
 async def on_message(message):
-    rand = random.randint(0,1000)
-    #we do not want the bot to reply to itself
+    rand = random.randint(0,500)
+
 
     if "bork" in message.content:
-        emoji = get(bot.get_all_emojis(), name='doge')
-        await bot.add_reaction(message, emoji)
+        emoji = get(client.get_all_emojis(), name="\U0001F415")
+        await client.add_reaction(message, "\U0001F415")
 
 
 
-
+    #we do not want the bot to reply to itself
     if message.author == client.user:
+        emoji = get(client.get_all_emojis(), name="\U0001F436")
+        await client.add_reaction(message, "\U0001F436")
         return
 
     if message.content.startswith('hello doggo'):
@@ -73,7 +75,7 @@ async def on_message(message):
     if "bork" in message.content:
         await client.send_message(message.channel, 'woof')
 
-    if rand == 500:
+    if rand == 300:
         await client.send_message(message.channel, 'woof woof')
 
     if rand == 200:
