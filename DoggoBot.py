@@ -39,11 +39,10 @@ async def on_message(message):
         #send_file(destination, fp, *, filename=None, content=None, tts=False)
 
 
-    if message.content.startswith('doggo'):
-        t = api.GetUserTimeline(screen_name="dog_feelings", count=10)
+    if message.content.startswith('what are you thinking doggo?'):
+        t = api.GetUserTimeline(screen_name="dog_feelings", count=20)
         tweets = [i.AsDict() for i in t]
-        print(t)
-        msg = tweets[random.randint(0,10)]['text']
+        msg = tweets[random.randint(0,20)]['full_text']
         await client.send_message(message.channel, msg)
 
 @client.event
