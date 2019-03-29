@@ -35,10 +35,10 @@ client = discord.Client()
 @client.event
 async def on_message(message):
     rand = random.randint(0,200)
-
+    text = message.content.lower()
     #Add Emoji Reaction to any message containing 'bork'
-    if "bork" in message.content:
-        emoji = get(client.get_all_emojis(), name="\U0001F415")
+    if "bork" in text:
+        emojRi = get(client.get_all_emojis(), name="\U0001F415")
         await client.add_reaction(message, "\U0001F415")
 
 
@@ -56,21 +56,23 @@ async def on_message(message):
     tweets = [i.AsDict() for i in t]
 
     #if message starts with 'hello doggo', say hello and @ the person who said it
-    if message.content.startswith('hello doggo'):
-        msg = 'Hello {0.author.mention}'.format(message)
+    if text.startswith('hello doggo'):
+        msg = 'Henlo {0.author.mention}'.format(message)
         await client.send_message(message.channel, msg)
 
     #if message starts with 'what are you thinking doggo?'
-    if message.content.startswith('what are you thinking doggo?'):
+    if text.startswith('what are you thinking doggo?'):
         #get random tweet from the dict of tweets
         msg = tweets[random.randint(0,20)]['full_text']
         #send tweet as message
         await client.send_message(message.channel, msg)
 
     #if message starts with 'doggo show me a doggo' send a pic of a doggo from folder
-    if message.content.startswith('doggo show me a doggo'):
+    if text.startswith('doggo show me a doggo'):
+        list = os.listdir(dir_path+'/Doggos')
+        number_files = len(list)
         #get random number for image
-        rando = random.randint(0,41) + 1
+        rando = random.randint(1,number_files)
         with open(dir_path+'/Doggos/'+str(rando)+'.jpg', 'rb') as picture:
             await client.send_file(message.channel,picture)
 
@@ -79,10 +81,13 @@ async def on_message(message):
         await client.send_message(message.channel, 'im a good boy')
 
     #if message contains 'woof' reply with 'bork' and vice versa
-    if "woof" in message.content:
+    if "woof" in text:
         await client.send_message(message.channel, 'bork')
 
-    if "bork" in message.content:
+    if "cat" in text:
+        await client.send_message(message.channel, 'WOOF! BORK! WOOF!')
+
+    if "bork" in text:
         await client.send_message(message.channel, 'woof')
 
     #at random send a message of 'woof woof' or 'bork bork'
