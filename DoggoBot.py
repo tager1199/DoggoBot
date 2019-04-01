@@ -41,10 +41,6 @@ async def on_message(message):
         emojRi = get(client.get_all_emojis(), name="\U0001F415")
         await client.add_reaction(message, "\U0001F415")
 
-    if message.channel.id != "545660682654449682":
-        return
-
-
     #if message author is bot
     if message.author == client.user:
         #Add emoji reaction to any message sent by the bot
