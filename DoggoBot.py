@@ -41,6 +41,8 @@ async def on_message(message):
         emojRi = get(client.get_all_emojis(), name="\U0001F415")
         await client.add_reaction(message, "\U0001F415")
 
+    if message.channel.id != "545660682654449682":
+        return
 
 
     #if message author is bot
@@ -75,6 +77,12 @@ async def on_message(message):
         rando = random.randint(1,number_files)
         with open(dir_path+'/Doggos/'+str(rando)+'.jpg', 'rb') as picture:
             await client.send_file(message.channel,picture)
+
+    if "test" in message.content:
+        embed = discord.Embed();
+        embed.set_thumbnail(url='https://images.dog.ceo/breeds/chow/n02112137_5089.jpg')
+        await client.send_message(message.channel, embed=embed)
+
 
     #if message contains 'good boy' or 'good boi' reply with 'im a good boy'
     if "good boy" in message.content or "good boi" in message.content:
