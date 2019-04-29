@@ -74,7 +74,7 @@ async def on_message(message):
         with open(dir_path+'/Doggos/'+str(rando)+'.jpg', 'rb') as picture:
             await client.send_file(message.channel,picture)
 
-    if "test" in message.content:
+    if "test" in text:
         embed = discord.Embed();
         embed.set_thumbnail(url='https://images.dog.ceo/breeds/chow/n02112137_5089.jpg')
         await client.send_message(message.channel, embed=embed)
@@ -100,6 +100,7 @@ async def on_message(message):
 
     if rand == 20:
         await client.send_message(message.channel, 'bork bork')
+
 
 
 @client.event
