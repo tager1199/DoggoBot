@@ -13,6 +13,7 @@ import discord
 import twitter
 import random
 import os
+from os import walk
 from discord.utils import get
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -71,11 +72,11 @@ async def on_message(message):
 
     #if message starts with 'doggo show me a doggo' send a pic of a doggo from folder
     if text.startswith('doggo show me a doggo'):
-        list = os.listdir(dir_path+'/Doggos')
-        number_files = len(list)
+        l = os.listdir(dir_path+'/Doggos')
+        number_files = len(l)
         #get random number for image
         rando = random.randint(1,number_files)
-        with open(dir_path+'/Doggos/'+str(rando)+'.jpg', 'rb') as picture:
+        with open(dir_path+'/Doggos/'+l[rando-1], 'rb') as picture:
             await client.send_file(message.channel,picture)
 
     if "test" in text:
