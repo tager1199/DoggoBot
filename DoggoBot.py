@@ -43,7 +43,7 @@ async def on_message(message):
         emojRi = get(client.get_all_emojis(), name="\U0001F415")
         await client.add_reaction(message, "\U0001F415")
 
-    #if message author is bot
+    #if message author is this bot
     if message.author == client.user:
         #Add emoji reaction to any message sent by the bot
         emoji = get(client.get_all_emojis(), name="\U0001F436")
@@ -51,7 +51,9 @@ async def on_message(message):
         #stop the bot replying to itself
         return
 
+    #if author is any bot
     if message.author.bot == True:
+        #stop bot from responding
         return
 
     #get 20 latest tweets from @dog_feelings and add them to a dict
@@ -72,10 +74,12 @@ async def on_message(message):
 
     #if message starts with 'doggo show me a doggo' send a pic of a doggo from folder
     if text.startswith('doggo show me a doggo'):
+        #get list of files
         l = os.listdir(dir_path+'/Doggos')
         number_files = len(l)
         #get random number for image
         rando = random.randint(1,number_files)
+        #send the file
         with open(dir_path+'/Doggos/'+l[rando-1], 'rb') as picture:
             await client.send_file(message.channel,picture)
 
@@ -84,28 +88,37 @@ async def on_message(message):
         embed.set_thumbnail(url='https://images.dog.ceo/breeds/chow/n02112137_5089.jpg')
         await client.send_message(message.channel, embed=embed)
 
+    #if some asks 'doggo rate my doggo' and they have a file
     if text.startswith('doggo rate my doggo') and "filename" in message.attachments[0]:
         for i in pic_ext:
+            #if attached file is an image
             if (message.attachments[0]["filename"]).endswith(i):
+                #react with a heart to the image they sent
                 await client.add_reaction(message, "❤")
+                #get random numbers for rating and message responce
                 choice = random.randint(0,len(rate))
                 rating = random.randint(10,21)
+                #reply with at least 10/10 and a random message from list
                 msg = str(rating) + "/10 " + rate[choice]
                 await client.send_message(message.channel,msg)
 
-    #if message contains 'good boy' or 'good boi' reply with 'im a good boy'
+    #if message contains 'good boy' or 'good boi'
     if "good boy" in text or "good boi" in text:
+        #reply with 'im a good boy'
         await client.send_message(message.channel, 'im a good boy')
 
-    #if message contains 'woof' reply with 'bork' and vice versa
+    #if message contains 'woof'
     if "woof" in text:
+        #reply with 'bork' and vice versa
         await client.send_message(message.channel, 'bork')
-
-    if "cat" in text:
-        await client.send_message(message.channel, 'WOOF! BORK! WOOF!')
 
     if "bork" in text:
         await client.send_message(message.channel, 'woof')
+
+    #if message contains 'cat'
+    if "cat" in text:
+        #reply with 'WOOF! BORK WOOF!'
+        await client.send_message(message.channel, 'WOOF! BORK! WOOF!')
 
     #at random send a message of 'woof woof' or 'bork bork'
     if rand == 50:
