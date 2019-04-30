@@ -23,9 +23,10 @@ access_token = "3303963448-DYXKxwkKTeOZPScOBgXVGLDfrl8DR0ZQsrQvMQp"
 access_token_secret =  t.read()
 consumer_key = "anEmKfK4WLIW5IIPyQk7mgWLn"
 consumer_secret = c.read()
+pic_ext = ['.jpg','.png','.jpeg']
 
 api = twitter.Api(consumer_key,consumer_secret,access_token,access_token_secret, tweet_mode='extended')
-
+rate = ["Excellent Woofer", "Much Cute", "Lovely Doggo", "Thats a big ol' pupper"]
 
 f = open("TOKEN.txt", "r")
 TOKEN = f.read();
@@ -47,6 +48,9 @@ async def on_message(message):
         emoji = get(client.get_all_emojis(), name="\U0001F436")
         await client.add_reaction(message, "\U0001F436")
         #stop the bot replying to itself
+        return
+
+    if message.author.bot == True:
         return
 
     #get 20 latest tweets from @dog_feelings and add them to a dict
@@ -79,9 +83,17 @@ async def on_message(message):
         embed.set_thumbnail(url='https://images.dog.ceo/breeds/chow/n02112137_5089.jpg')
         await client.send_message(message.channel, embed=embed)
 
+    if text.startswith('doggo rate my doggo') and "filename" in message.attachments[0]:
+        for i in pic_ext:
+            if (message.attachments[0]["filename"]).endswith(i):
+                await client.add_reaction(message, "❤")
+                choice = random.randint(0,len(rate))
+                rating = random.randint(10,21)
+                msg = str(rating) + "/10 " + rate[choice]
+                await client.send_message(message.channel,msg)
 
     #if message contains 'good boy' or 'good boi' reply with 'im a good boy'
-    if "good boy" in message.content or "good boi" in message.content:
+    if "good boy" in text or "good boi" in text:
         await client.send_message(message.channel, 'im a good boy')
 
     #if message contains 'woof' reply with 'bork' and vice versa
