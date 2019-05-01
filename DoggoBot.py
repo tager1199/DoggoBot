@@ -38,9 +38,9 @@ client = discord.Client()
 async def on_message(message):
     rand = random.randint(0,200)
     text = message.content.lower()
+
     #Add Emoji Reaction to any message containing 'bork'
     if "bork" in text:
-        emojRi = get(client.get_all_emojis(), name="\U0001F415")
         await client.add_reaction(message, "\U0001F415")
 
     #if message author is this bot
@@ -81,7 +81,8 @@ async def on_message(message):
         rando = random.randint(1,number_files)
         #send the file
         with open(dir_path+'/Doggos/'+l[rando-1], 'rb') as picture:
-            await client.send_file(message.channel,picture)
+            m = await client.send_file(message.channel,picture)
+        await client.add_reaction(m, "❤")
 
     if "test" in text:
         embed = discord.Embed();
